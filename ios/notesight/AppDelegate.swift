@@ -10,31 +10,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var reactNativeDelegate: ReactNativeDelegate?
   var reactNativeFactory: RCTReactNativeFactory?
 
-  func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-  return RCTLinkingManager.application(app, open: url, options: options)
-}
+  func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+  ) -> Bool {
+    let delegate = ReactNativeDelegate()
+    let factory = RCTReactNativeFactory(delegate: delegate)
+    delegate.dependencyProvider = RCTAppDependencyProvider()
 
-  // func application(
-  //   _ application: UIApplication,
-  //   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-  // ) -> Bool {
-  //   let delegate = ReactNativeDelegate()
-  //   let factory = RCTReactNativeFactory(delegate: delegate)
-  //   delegate.dependencyProvider = RCTAppDependencyProvider()
+    reactNativeDelegate = delegate
+    reactNativeFactory = factory
 
-  //   reactNativeDelegate = delegate
-  //   reactNativeFactory = factory
+    window = UIWindow(frame: UIScreen.main.bounds)
 
-  //   window = UIWindow(frame: UIScreen.main.bounds)
+    factory.startReactNative(
+      withModuleName: "notesight",
+      in: window,
+      launchOptions: launchOptions
+    )
 
-  //   factory.startReactNative(
-  //     withModuleName: "notesight",
-  //     in: window,
-  //     launchOptions: launchOptions
-  //   )
-
-  //   return true
-  // }
+    return true
+  }
 }
 
 class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
