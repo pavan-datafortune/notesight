@@ -8,7 +8,7 @@ const TestimonialSection = () => {
       <Text style={styles.badge}>Testimonials</Text>
 
       <Text style={styles.title}>
-        What <Text style={styles.highlighted}>people</Text> are{'\n'}saying
+        What <Text style={styles.highlighted}>people</Text> are saying
       </Text>
 
       <View style={styles.card}>
@@ -51,9 +51,7 @@ export default TestimonialSection;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
   },
   badge: {
     backgroundColor: '#3b82f6',
@@ -64,10 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 12,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
   title: {
-    fontSize: 24,
-    fontWeight: '700',
+    fontSize: 22,
+    fontWeight: '600',
     textAlign: 'center',
     marginBottom: 24,
     color: '#111827',

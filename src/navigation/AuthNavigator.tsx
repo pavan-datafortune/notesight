@@ -1,20 +1,25 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RouteStackParamList } from '../route/Route';
 import LoginScreen from '../screens/LoginScreen';
 import FlashCardScreen from '../screens/FlashCardScreen';
 import HomeScreen from '../screens/HomeScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RouteStackParamList>();
 
 export default function AuthNavigator() {
   return (
-    <Stack.Navigator>
-      {/* <Stack.Screen name="notesight" component={LoginScreen} /> */}
+    <Stack.Navigator initialRouteName="Home Screen">
+      <Stack.Screen name="login" component={LoginScreen} />
       <Stack.Screen
-        name="notesight"
+        name="Home Screen"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen name="Flash Cards" component={FlashCardScreen} /> */}
+      <Stack.Screen
+        name="Flash Cards"
+        component={FlashCardScreen}
+        options={{ headerBackButtonDisplayMode: 'minimal' }}
+      />
     </Stack.Navigator>
   );
 }

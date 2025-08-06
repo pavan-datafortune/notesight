@@ -1,6 +1,6 @@
 import React from 'react';
 import { auth0Config } from './auth0';
-import { Auth0Provider, useAuth0 } from 'react-native-auth0';
+import { Auth0Provider } from 'react-native-auth0';
 
 export const AuthProvider = ({ children }: { children: any }) => {
   const AUTH0_DOMAIN = auth0Config.domain;

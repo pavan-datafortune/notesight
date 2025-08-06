@@ -1,31 +1,49 @@
-import { BookOpen, Zap } from 'lucide-react-native';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { Zap, ThumbsUp } from 'lucide-react-native';
 
 export const Features = () => {
   return (
-    <View style={{ borderWidth: 1, borderColor: 'red' }}>
+    <View style={{ display: 'flex', alignItems: 'center' }}>
       {/* Spark Icon or animation placeholder */}
       <View style={styles.spark}>
         <Text style={styles.sparkText}>✨</Text>
       </View>
       {/* Title Text Block */}
       <Text style={styles.title}>
-        AI-powered SAT and PSAT test prep to help students learn,
+        AI-powered SAT and PSAT test prep to help students learn,{' '}
         <Text style={styles.highlight}> reduce </Text>
       </Text>
       <Text style={styles.title}>
         procrastination, and{' '}
-        <Zap size={16} color="#f97316" style={{ marginBottom: -2 }} />
+        <View
+          style={{
+            marginBottom: -2,
+            backgroundColor: '#f97316',
+            padding: 3,
+            borderRadius: 5,
+          }}
+        >
+          <Zap strokeWidth={3} size={12} color="#fff" />
+        </View>
         <Text style={styles.iconHighlight}> boost </Text>
       </Text>
       <Text style={styles.title}>
         confidence{' '}
-        <BookOpen size={16} color="#3B82F6" style={{ marginBottom: -2 }} />
+        <View
+          style={{
+            marginBottom: -2,
+            backgroundColor: '#3B82F6',
+            padding: 3,
+            borderRadius: 5,
+          }}
+        >
+          <ThumbsUp strokeWidth={4} size={12} color="#fff" />
+        </View>
       </Text>
       {/* Map Image with circular avatars */}
       <View style={styles.mapSection}>
         <Image
-          source={{ uri: 'https://i.ibb.co/XSk4cfT/map-placeholder.png' }} // Replace with real image URL
+          source={require('../../assets/globe.png')}
           style={styles.mapImage}
           resizeMode="contain"
         />
@@ -49,10 +67,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   title: {
-    fontSize: 16,
+    fontSize: 22,
+    fontWeight: '600',
     color: '#111827',
     textAlign: 'center',
-    fontWeight: '500',
     marginBottom: 4,
   },
   highlight: {
@@ -72,9 +90,11 @@ const styles = StyleSheet.create({
   },
   mapImage: {
     width: '100%',
-    height: 160,
+    height: 280,
   },
   card: {
+    position: 'absolute',
+    bottom: 40,
     backgroundColor: '#f9fafb',
     paddingVertical: 20,
     paddingHorizontal: 16,

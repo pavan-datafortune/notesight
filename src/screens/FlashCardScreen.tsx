@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import FlashCard from '../components/flash-card/FlashCard';
+import { ScrollView } from 'react-native';
 import { getAllDocumentFlashCards } from '../service/FlashCardService';
 
 const FlashCardScreen = () => {

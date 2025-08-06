@@ -1,8 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useAuth0 } from 'react-native-auth0';
 import AppNavigator from './AppNavigator';
 import AuthNavigator from './AuthNavigator';
-import { useAuth0 } from 'react-native-auth0';
 
 const Stack = createNativeStackNavigator();
 

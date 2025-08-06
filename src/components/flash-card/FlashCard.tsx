@@ -1,4 +1,4 @@
-import Lucide from '@react-native-vector-icons/lucide';
+import { RotateCcw } from 'lucide-react-native';
 import React, { useRef, useState } from 'react';
 import {
   Animated,
@@ -66,7 +66,7 @@ const FlashCard = ({ key, flashData }: any) => {
             <Text style={styles.fontCardText}>{flashData.question}</Text>
 
             <View style={{ display: 'flex', flexDirection: 'row', gap: 10 }}>
-              <Lucide name="lock" color="#444444" size={12} />
+              <RotateCcw color="#444444" size={12} />
               <Text style={{ fontSize: 14, color: '#8C8C8C' }}>
                 Click to flip card
               </Text>

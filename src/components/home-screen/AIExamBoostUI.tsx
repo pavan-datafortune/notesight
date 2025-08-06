@@ -1,15 +1,17 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Video from 'react-native-video';
+import { RouteStackParamList } from '../../route/Route';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const AIExamBoostUI = () => {
+  type NavigationProp = NativeStackNavigationProp<RouteStackParamList>;
+
+  const navigation = useNavigation<NavigationProp>();
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View>
       {/* Top Card */}
       <View style={styles.card}>
         <Text style={styles.headerText}>
@@ -20,24 +22,34 @@ const AIExamBoostUI = () => {
           Personalized, Efficient, Affordable Learning.{'\n'}Get 24/7 help when
           you need it.
         </Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Flash Cards')}
+        >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
 
       {/* Feature Tags */}
-      <View style={styles.featureContainer}>
-        <View style={[styles.tag, styles.blueTag]}>
-          <Text style={styles.tagText}>available 24/7</Text>
-        </View>
-        <View style={[styles.tag, styles.greenTag]}>
-          <Text style={styles.tagText}>personalized</Text>
-        </View>
-        <View style={[styles.tag, styles.orangeTag]}>
-          <Text style={styles.tagText}>affordable</Text>
-        </View>
+      <View
+        style={{
+          width: '100%',
+          height: 250,
+          borderRadius: 20,
+          overflow: 'hidden',
+        }}
+      >
+        <Video
+          source={require('../../assets/landing.mp4')}
+          style={{
+            width: '100%',
+            height: '100%',
+          }}
+          repeat={true}
+          resizeMode="cover"
+        />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -82,31 +94,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     fontSize: 16,
-  },
-  featureContainer: {
-    alignItems: 'center',
-    gap: 10,
-  },
-  tag: {
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    elevation: 2,
-    shadowColor: '#000',
-  },
-  blueTag: {
-    backgroundColor: '#4A90E2',
-  },
-  greenTag: {
-    backgroundColor: '#34C759',
-  },
-  orangeTag: {
-    backgroundColor: '#FF9500',
-  },
-  tagText: {
-    color: 'white',
-    fontWeight: '600',
-    fontSize: 14,
   },
 });
 

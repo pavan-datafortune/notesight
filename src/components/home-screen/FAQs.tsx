@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import { Plus, Minus, ChevronUp, ChevronDown } from 'lucide-react-native';
+import { Minus, Plus, ChevronUp, ChevronDown } from 'lucide-react-native';
 
 const faqs = [
   {
@@ -55,7 +55,7 @@ export default function FAQSection() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.tag}>
+      <View style={styles.badge}>
         <Text style={styles.tagText}>FAQs</Text>
       </View>
 
@@ -109,30 +109,40 @@ export default function FAQSection() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
+    display: 'flex',
+    alignItems: 'center',
   },
-  tag: {
-    backgroundColor: '#0066FF',
-    alignSelf: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 6,
-    borderRadius: 999,
-    marginBottom: 10,
-    elevation: 2,
+  badge: {
+    backgroundColor: '#3b82f6',
+    color: 'white',
+    paddingHorizontal: 16,
+    paddingVertical: 4,
+    borderRadius: 20,
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    width: 75,
   },
   tagText: {
+    textAlign: 'center',
     color: '#fff',
     fontWeight: '600',
   },
   heading: {
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 22,
+    fontWeight: '600',
     marginBottom: 20,
   },
   highlighted: {
-    color: '#FF6B00',
+    backgroundColor: '#FF6B00',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   card: {
+    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 16,
     padding: 16,
@@ -140,6 +150,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   activeCard: {
+    width: '100%',
     backgroundColor: '#0A0D1C',
   },
   row: {
@@ -164,15 +175,15 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   button: {
+    display: 'flex',
+    justifyContent: 'center',
     backgroundColor: '#0A0D1C',
-    paddingVertical: 14,
     borderRadius: 28,
-    marginTop: 20,
-    alignItems: 'center',
     width: 160,
-    alignSelf: 'center',
   },
   buttonText: {
+    paddingTop: 12,
+    textAlign: 'center',
     color: '#fff',
     fontWeight: '600',
   },

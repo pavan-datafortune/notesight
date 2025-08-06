@@ -14,10 +14,10 @@ const Footer = () => {
     <View style={styles.container}>
       {/* Logo */}
       <View style={styles.logoContainer}>
-        {/* <Image
-          source={require('./assets/notesight-logo.png')}
+        <Image
+          source={require('../../assets/logo-white.png')}
           style={styles.logo}
-        /> */}
+        />
       </View>
 
       {/* Navigation Links */}
@@ -33,7 +33,7 @@ const Footer = () => {
           onPress={() => Linking.openURL('https://www.linkedin.com')}
           style={styles.iconButton}
         >
-          {/* <Linkedin size={20} color="#0B0E1C" /> */}
+          <Linkedin size={15} color="#0B0E1C" />
         </TouchableOpacity>
       </View>
 
@@ -56,14 +56,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#0B0E1C',
     paddingHorizontal: 24,
     paddingVertical: 32,
+    borderRadius: 10,
   },
   logoContainer: {
     alignItems: 'center',
     marginBottom: 16,
   },
   logo: {
-    width: 120,
-    height: 30,
+    width: 150,
+    height: 40,
     resizeMode: 'contain',
   },
   navLinks: {
