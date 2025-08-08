@@ -1,29 +1,18 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
-import { Platform } from 'react-native';
-import { auth0Config } from '../auth/auth0';
+import auth0 from '../auth/auth0';
 import * as Keychain from 'react-native-keychain';
 
 export default function LoginScreen() {
-  const { authorize, clearSession, cancelWebAuth } = useAuth0();
-
-  const redirectUri = Platform.select({
-    ios: `${auth0Config.appBundleId}.auth0://${auth0Config.domain}/ios/${auth0Config.appBundleId}/callback`,
-    android: `${auth0Config.appBundleId}.auth0://${auth0Config.domain}/android/${auth0Config.appBundleId}/callback`,
-  });
+  const { cancelWebAuth } = useAuth0();
 
   const login = async () => {
-    console.log(redirectUri);
     try {
-      const credentials = await authorize(
-        {
-          scope: 'openid profile email',
-          redirectUrl: redirectUri,
-        },
-        {
-          useLegacyCallbackUrl: true,
-        },
-      );
+      const credentials = await auth0.webAuth.authorize({
+        scope: 'openid profile email',
+        audience: 'https://dev-7v1ogpzhapj6e1en.us.auth0.com',
+        redirectUrl: 'com.notesight://auth-callback',
+      });
 
       await Keychain.setGenericPassword('token', credentials.accessToken);
     } catch (e: any) {

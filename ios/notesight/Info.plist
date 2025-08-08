@@ -20,7 +20,23 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+
 	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>com.notesight</string>
+		</array>
+	</dict>
+	</array>
+
+<key>LSApplicationQueriesSchemes</key>
+<array>
+  <string>com.notesight</string>
+</array>
+
+	<!-- <key>CFBundleURLTypes</key>
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
@@ -32,7 +48,7 @@
 				<string>$(PRODUCT_BUNDLE_IDENTIFIER).auth0</string>
 			</array>
 		</dict>
-	</array>
+	</array> -->
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,6 +60,13 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSDocumentsUsageDescription</key>
+<string>This app needs access to your documents</string>
+<key>LSSupportsOpeningDocumentsInPlace</key>
+<true/>
+<key>UIFileSharingEnabled</key>
+<true/>
+
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>RCTNewArchEnabled</key>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Image,
@@ -6,6 +6,7 @@ import {
   ScrollView,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Features from '../components/home-screen/Features';
 import ForEveryLearner from '../components/home-screen/ForEveryLearner';
@@ -13,12 +14,45 @@ import TestimonialSection from '../components/home-screen/Testimonials';
 import FAQSection from '../components/home-screen/FAQs';
 import Footer from '../components/home-screen/FooterSection';
 import AIExamBoostUI from '../components/home-screen/AIExamBoostUI';
-import LoginScreen from './LoginScreen';
-import { Menu } from 'lucide-react-native';
+import { FileCheck, Menu } from 'lucide-react-native';
 import SideMenu from '../components/home-screen/SideMenu';
+import FloatingButton from '../components/home-screen/FloatingButton';
+import UploadModal from '../components/home-screen/UploadModal';
+import { fetchAllDocuments } from '../api/file-upload/GetFiles';
 
 const HomeScreen = () => {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  console.log('isModalVisible>>>', isModalVisible);
+
+  async function getAllFiles() {
+    try {
+      const getFilesResp = await fetchAllDocuments();
+
+      console.log('getFilesResp>>>', getFilesResp);
+    } catch (error) {
+      console.log('error>>>', error);
+    }
+  }
+  useEffect(() => {
+    getAllFiles();
+  }, []);
+  // const pickDocument = async () => {
+  //   try {
+  //     const result = await DocumentPicker.pick({
+  //       type: [DocumentPicker.types.allFiles],
+  //     });
+
+  //     Alert.alert('Picked Document', JSON.stringify(result));
+  //   } catch (err) {
+  //     if (DocumentPicker.isCancel(err)) {
+  //       console.log('User canceled');
+  //     } else {
+  //       console.error('Error picking document: ', err);
+  //     }
+  //   }
+  // };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -29,12 +63,15 @@ const HomeScreen = () => {
           resizeMode="contain"
         />
 
-        <LoginScreen />
+        {/* <LoginScreen /> */}
+
+        {/* <TouchableOpacity onPress={pickDocument}>
+          <FileCheck size={32} color="black" />
+        </TouchableOpacity> */}
 
         <TouchableOpacity onPress={() => setMenuVisible(true)}>
           <Menu size={32} color="black" />
         </TouchableOpacity>
-
         <SideMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
       </View>
 
@@ -55,6 +92,12 @@ const HomeScreen = () => {
           <Footer />
         </View>
       </ScrollView>
+
+      <FloatingButton onPress={() => setModalVisible(true)} />
+      <UploadModal
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </SafeAreaView>
   );
 };

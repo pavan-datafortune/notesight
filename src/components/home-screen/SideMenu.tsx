@@ -19,7 +19,7 @@ type SideMenuProps = {
 };
 
 export default function SideMenu({ visible, onClose }: SideMenuProps) {
-  const slideAnim = useRef(new Animated.Value(-SCREEN_WIDTH)).current;
+  const slideAnim = useRef(new Animated.Value(SCREEN_WIDTH)).current;
   const [internalVisible, setInternalVisible] = useState(visible);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function SideMenu({ visible, onClose }: SideMenuProps) {
       }).start();
     } else {
       Animated.timing(slideAnim, {
-        toValue: -SCREEN_WIDTH,
+        toValue: SCREEN_WIDTH,
         duration: 300,
         useNativeDriver: true,
       }).start(() => {
@@ -57,6 +57,10 @@ export default function SideMenu({ visible, onClose }: SideMenuProps) {
           ]}
         >
           <ScrollView contentContainerStyle={styles.menuContent}>
+            {/* <TouchableOpacity onPress={onClose} style={styles.closeIcon}>
+              <X size={20} color="#333" />
+            </TouchableOpacity> */}
+
             <MenuSection
               title="Features"
               items={[
@@ -78,6 +82,7 @@ export default function SideMenu({ visible, onClose }: SideMenuProps) {
                 'For High School Students',
               ]}
             />
+
             <MenuItem title="Pricing" />
             <MenuItem title="FAQ" />
             <MenuItem title="Contact us" />
@@ -147,15 +152,23 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.3)',
     flexDirection: 'row',
+    justifyContent: 'flex-end', // slide from right
   },
   menuContainer: {
-    width: SCREEN_WIDTH * 0.65,
+    width: SCREEN_WIDTH * 0.6,
     height: '100%',
     backgroundColor: '#fff',
     padding: 16,
+    paddingTop: 30,
   },
   menuContent: {
     paddingTop: 50,
+  },
+  closeIcon: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    zIndex: 1,
   },
   section: {
     marginBottom: 24,
@@ -174,5 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginVertical: 4,
     color: '#333',
+    paddingLeft: 8,
   },
 });
