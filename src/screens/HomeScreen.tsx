@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F4F4',
   },
   navBar: {
-    marginTop: 45,
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: 'row',

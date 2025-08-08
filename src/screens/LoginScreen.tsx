@@ -36,8 +36,12 @@ export default function LoginScreen() {
         {
           scope: 'openid profile email',
           redirectUrl: constructRedirectUrl(),
+          additionalParameters: { prompt: 'login' },
         },
-        { customScheme: 'com.notesight.app.auth0' },
+        {
+          customScheme: 'com.notesight.app.auth0',
+          ephemeralSession: true,
+        },
       );
       console.log('AFTER LOGIN -> ', credentials);
       await Keychain.setGenericPassword('token', credentials.accessToken);
@@ -56,14 +60,12 @@ export default function LoginScreen() {
   const logout = async () => {
     try {
       await clearSession({ federated: true });
+      await Keychain.resetGenericPassword();
     } catch (e) {
       console.log('Error clearing session:', e);
     }
-    await Keychain.resetGenericPassword();
     setCredentials(null);
   };
-
-  console.log('STATE CREDS', user, credentials);
 
   if (user || credentials) {
     return (
