@@ -3,7 +3,6 @@ import auth0, { auth0Config } from './auth0';
 import { Auth0Provider } from 'react-native-auth0';
 
 export const AuthProvider = ({ children }: { children: any }) => {
-  console.log('auth0>>>>', auth0);
   const AUTH0_DOMAIN = auth0Config.domain; //'dev-7v1ogpzhapj6e1en.us.auth0.com';
   const AUTH0_CLIENT_ID = auth0Config.clientId; //'Hr4VAx80SfytM23nG9Kzh48HFK8EbWUJ';
 

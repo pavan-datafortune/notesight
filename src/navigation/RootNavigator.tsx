@@ -7,11 +7,9 @@ import AuthNavigator from './AuthNavigator';
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-  const { user, isLoading, error } = useAuth0();
-
   return (
     <NavigationContainer>
-      {user ? <AppNavigator /> : <AuthNavigator />}
+      <AuthNavigator />
     </NavigationContainer>
   );
 }
