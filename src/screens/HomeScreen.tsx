@@ -25,13 +25,9 @@ const HomeScreen = () => {
   const [menuVisible, setMenuVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  console.log('isModalVisible>>>', isModalVisible);
-
   async function getAllFiles() {
     try {
       const getFilesResp = await fetchAllDocuments();
-
-      console.log('getFilesResp>>>', getFilesResp);
     } catch (error) {
       console.log('error>>>', error);
     }

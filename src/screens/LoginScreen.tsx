@@ -21,7 +21,6 @@ export default function LoginScreen() {
         setCredentials(null);
       }
     } catch (error) {
-      console.log(error);
       setCredentials(null);
     }
   };
