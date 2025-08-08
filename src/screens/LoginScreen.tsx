@@ -3,6 +3,8 @@ import { useAuth0 } from 'react-native-auth0';
 import { constructRedirectUrl } from '../auth/auth0';
 import * as Keychain from 'react-native-keychain';
 import { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useAuthStore } from '../stores/auth';
 
 export default function LoginScreen() {
   const { user, cancelWebAuth, authorize, getCredentials, clearSession } =
@@ -42,7 +44,6 @@ export default function LoginScreen() {
           ephemeralSession: true,
         },
       );
-      console.log('AFTER LOGIN -> ', credentials);
       await Keychain.setGenericPassword('token', credentials.accessToken);
       setCredentials(null);
       updateCredentials();

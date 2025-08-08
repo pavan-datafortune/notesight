@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Image,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  ScrollView,
-} from 'react-native';
-import { Menu } from 'lucide-react-native';
-import SideMenu from '../components/home-screen/SideMenu';
+import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { fetchAllDocuments } from '../api/file-upload/GetFiles';
 import FileTiles from '../components/dashboard/FileList';
 import HorizontalButtons from '../components/dashboard/Features';
 import UploadFileBlock from '../components/dashboard/UploadFileBlock';
+import { AppNavBar } from '../components/app-navbar/AppNavbar';
 
 const Dashboard = () => {
-  const [menuVisible, setMenuVisible] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [files, setFiles] = useState([]);
 
@@ -38,18 +28,7 @@ const Dashboard = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.navBar}>
-        <Image
-          source={require('../assets/logo.png')}
-          style={styles.image}
-          resizeMode="contain"
-        />
-
-        <TouchableOpacity onPress={() => setMenuVisible(true)}>
-          <Menu size={32} color="black" />
-        </TouchableOpacity>
-        <SideMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
-      </View>
+      <AppNavBar />
 
       <HorizontalButtons />
       <ScrollView>
