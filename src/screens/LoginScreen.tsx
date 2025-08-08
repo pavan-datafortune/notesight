@@ -44,6 +44,7 @@ export default function LoginScreen() {
           ephemeralSession: true,
         },
       );
+      console.log('AFTER LOGIN -> ', credentials);
       await Keychain.setGenericPassword('token', credentials.accessToken);
       setCredentials(null);
       updateCredentials();

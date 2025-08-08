@@ -14,12 +14,12 @@ import TestimonialSection from '../components/home-screen/Testimonials';
 import FAQSection from '../components/home-screen/FAQs';
 import Footer from '../components/home-screen/FooterSection';
 import AIExamBoostUI from '../components/home-screen/AIExamBoostUI';
-import FloatingButton from '../components/home-screen/FloatingButton';
-import UploadModal from '../components/home-screen/UploadModal';
+// import FloatingButton from '../components/home-screen/FloatingButton';
+// import UploadModal from '../components/home-screen/UploadModal';
 import { AppNavBar } from '../components/app-navbar/AppNavbar';
 
 const HomeScreen = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
+  // const [isModalVisible, setModalVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -42,11 +42,11 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      <FloatingButton onPress={() => setModalVisible(true)} />
+      {/* <FloatingButton onPress={() => setModalVisible(true)} />
       <UploadModal
         visible={isModalVisible}
         onClose={() => setModalVisible(false)}
-      />
+      /> */}
     </SafeAreaView>
   );
 };

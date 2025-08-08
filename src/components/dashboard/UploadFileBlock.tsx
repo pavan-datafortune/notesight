@@ -15,7 +15,7 @@ import { completeUpload } from '../../api/file-upload/CompleteUpload';
 
 const UploadFileBlock = () => {
   const [files, setFiles] = useState<any>([]);
-  const [isUploading, setUploading] = useState<any>([]);
+  const [isUploading, setUploading] = useState<any>(false);
 
   const pickDocument = async () => {
     try {
