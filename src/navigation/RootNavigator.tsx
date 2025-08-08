@@ -8,7 +8,6 @@ const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
   const { user, isLoading, error } = useAuth0();
-  console.log('ROOT NAV USER CONTEXT :: ', user, error, isLoading);
 
   return (
     <NavigationContainer>

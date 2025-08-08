@@ -85,16 +85,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-// manifestPlaceholders = [
-//       auth0Domain: "dev-ihammamxgdm4t4va.us.auth0.com",
-//       auth0Scheme: "com.notesight.app.auth0"
-//     ]
-//  manifestPlaceholders = [
-//     auth0Domain: "dev-ihammamxgdm4t4va.us.auth0.com",
-//     auth0Scheme: "com.notesight.app"
-// ]
-
-        // manifestPlaceholders = [auth0Domain: &quot;dev-ihammamxgdm4t4va.us.auth0.com&quot;, auth0Scheme: &quot;${applicationId}.auth0&quot;]
 }
     signingConfigs {
         debug {

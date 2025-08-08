@@ -1,18 +1,20 @@
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
-import auth0 from '../auth/auth0';
+import { constructRedirectUrl } from '../auth/auth0';
 import * as Keychain from 'react-native-keychain';
 
 export default function LoginScreen() {
-  const { cancelWebAuth } = useAuth0();
+  const { cancelWebAuth, authorize } = useAuth0();
 
   const login = async () => {
     try {
-      const credentials = await auth0.webAuth.authorize({
-        scope: 'openid profile email',
-        audience: 'https://dev-7v1ogpzhapj6e1en.us.auth0.com',
-        redirectUrl: 'com.notesight://auth-callback',
-      });
+      const credentials = await authorize(
+        {
+          scope: 'openid profile email',
+          redirectUrl: constructRedirectUrl(),
+        },
+        { customScheme: 'com.notesight.app.auth0' },
+      );
 
       await Keychain.setGenericPassword('token', credentials.accessToken);
     } catch (e: any) {

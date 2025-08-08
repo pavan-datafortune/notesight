@@ -19,6 +19,7 @@ import SideMenu from '../components/home-screen/SideMenu';
 import FloatingButton from '../components/home-screen/FloatingButton';
 import UploadModal from '../components/home-screen/UploadModal';
 import { fetchAllDocuments } from '../api/file-upload/GetFiles';
+import LoginScreen from './LoginScreen';
 
 const HomeScreen = () => {
   const [menuVisible, setMenuVisible] = useState(false);
@@ -63,7 +64,7 @@ const HomeScreen = () => {
           resizeMode="contain"
         />
 
-        {/* <LoginScreen /> */}
+        <LoginScreen />
 
         {/* <TouchableOpacity onPress={pickDocument}>
           <FileCheck size={32} color="black" />
@@ -111,6 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F4F4',
   },
   navBar: {
+    marginTop: 45,
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: 'row',
