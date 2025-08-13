@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { fetchAllDocuments } from '../service/file-upload/GetFiles';
 import { AppNavBar } from '../components/app-navbar/AppNavbar';
-import FileTiles from '../components/planner/FileList';
-import UploadFileBlock from '../components/planner/UploadFileBlock';
-import ServicesList from '../components/planner/ServicesList';
+import FileTiles from '../components/tutor-center-tools/FileList';
+import UploadFileBlock from '../components/tutor-center-tools/UploadFileBlock';
+import ServicesList from '../components/tutor-center-tools/ServicesList';
 
 const TutorCenterTools = () => {
   const [files, setFiles] = useState<any>([]);
