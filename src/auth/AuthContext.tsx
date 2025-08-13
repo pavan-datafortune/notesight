@@ -1,5 +1,5 @@
 import React from 'react';
-import auth0, { auth0Config } from './auth0';
+import { auth0Config } from './auth0';
 import { Auth0Provider } from 'react-native-auth0';
 
 export const AuthProvider = ({ children }: { children: any }) => {

@@ -5,9 +5,12 @@ import { useAuth0 } from 'react-native-auth0';
 
 import AuthNavigator from './AuthNavigator';
 import AppNavigator from './AppNavigator';
+import { useAuthStore } from '../stores/auth';
 
 export default function RootNavigator() {
   const { user, isLoading } = useAuth0();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -18,7 +21,7 @@ export default function RootNavigator() {
 
   return (
     <NavigationContainer>
-      {user ? <AppNavigator /> : <AuthNavigator />}
+      {isLoggedIn ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }

@@ -33,6 +33,7 @@ export default function FileTiles({ files }: any) {
       renderItem={renderItem}
       keyExtractor={item => item.id.toString()}
       showsVerticalScrollIndicator={false}
+      scrollEnabled={false}
       contentContainerStyle={styles.listContainer}
     />
   );

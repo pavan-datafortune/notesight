@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
-import { fetchAllDocuments } from '../api/file-upload/GetFiles';
-import FileTiles from '../components/dashboard/FileList';
-import HorizontalButtons from '../components/dashboard/Features';
-import UploadFileBlock from '../components/dashboard/UploadFileBlock';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 import { AppNavBar } from '../components/app-navbar/AppNavbar';
 
-const Dashboard = () => {
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [files, setFiles] = useState([]);
-
-  console.log('isModalVisible>>>', isModalVisible);
+const Planner = () => {
+  const [isLoading, setLoading] = useState(false);
 
   async function getAllFiles() {
     try {
-      const getFilesResp = await fetchAllDocuments();
+      setLoading(true);
 
-      setFiles(getFilesResp);
-      console.log('getFilesResp>>>', getFilesResp);
+      setLoading(false);
     } catch (error) {
       console.log('error>>>', error);
     }
@@ -26,25 +24,18 @@ const Dashboard = () => {
     getAllFiles();
   }, []);
 
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <AppNavBar />
-
-      <HorizontalButtons />
-      <ScrollView>
-        <View
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: 20,
-            gap: 24,
-          }}
-        >
-          <UploadFileBlock />
-
-          <FileTiles files={files} />
-        </View>
-      </ScrollView>
+      <Text>Dashboard</Text>
     </SafeAreaView>
   );
 };
@@ -92,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Dashboard;
+export default Planner;

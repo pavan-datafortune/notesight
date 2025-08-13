@@ -1,10 +1,12 @@
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import SideMenu from '../home-screen/SideMenu';
+import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { Menu } from 'lucide-react-native';
-import LoginScreen from '../../screens/LoginScreen';
 import React, { useState } from 'react';
+import { useAuth0 } from 'react-native-auth0';
+import SideMenu from '../common/SideMenu';
 
-export const AppNavBar = () => {
+export const AppNavBar = ({ login }: any) => {
+  const { user } = useAuth0();
+
   const [menuVisible, setMenuVisible] = useState(false);
 
   return (
@@ -14,12 +16,18 @@ export const AppNavBar = () => {
         style={styles.image}
         resizeMode="contain"
       />
+      {!user && (
+        <TouchableOpacity style={styles.signInButton} onPress={login}>
+          <Text style={styles.signInText}>Login</Text>
+        </TouchableOpacity>
+      )}
 
-      <LoginScreen />
+      {/* <LoginScreen /> */}
 
       <TouchableOpacity onPress={() => setMenuVisible(true)}>
         <Menu size={32} color="black" />
       </TouchableOpacity>
+
       <SideMenu visible={menuVisible} onClose={() => setMenuVisible(false)} />
     </View>
   );
@@ -28,11 +36,18 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
   },
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#F4F4F4',
+  signInButton: {
+    backgroundColor: '#000',
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+  },
+  signInText: {
+    color: '#fff',
+    fontWeight: '600',
   },
   navBar: {
+    width: '100%',
     paddingHorizontal: 16,
     paddingVertical: 12,
     flexDirection: 'row',

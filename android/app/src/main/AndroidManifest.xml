@@ -35,10 +35,11 @@
         <action android:name="android.intent.action.VIEW" />
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
-        <data
+          <data android:scheme="notesight" android:host="android" android:path="/callback" />
+        <!-- <data
           android:scheme="com.notesight.app.auth0"
           android:host="dev-ihammamxgdm4t4va.us.auth0.com"
-          android:pathPrefix="/android/com.notesight.app/callback" />
+          android:pathPrefix="/android/com.notesight.app/callback" /> -->
       </intent-filter>
     </activity>
 

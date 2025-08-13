@@ -1,52 +1,47 @@
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
 import { constructRedirectUrl } from '../auth/auth0';
-import * as Keychain from 'react-native-keychain';
-import { useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { AppNavBar } from '../components/app-navbar/AppNavbar';
+import { useFocusEffect } from '@react-navigation/native';
 import { useAuthStore } from '../stores/auth';
+import HomeScreen from './HomeScreen';
+import * as Keychain from 'react-native-keychain';
 
 export default function LoginScreen() {
-  const { user, cancelWebAuth, authorize, getCredentials, clearSession } =
-    useAuth0();
-  const [credentials, setCredentials] = useState<any>();
+  const { cancelWebAuth, authorize } = useAuth0();
+  const { setToken, login } = useAuthStore.getState();
 
-  const updateCredentials = async () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userLogin = async () => {
     try {
-      const data = await getCredentials();
-      if (data) {
-        setCredentials({
-          accessToken: data.accessToken,
-          idToken: data.idToken,
-        });
-      } else {
-        setCredentials(null);
-      }
-    } catch (error) {
-      setCredentials(null);
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(updateCredentials, 1000);
-  }, []);
-
-  const login = async () => {
-    try {
+      setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      console.log('constructRedirectUrl', constructRedirectUrl());
       const credentials = await authorize(
         {
           scope: 'openid profile email',
           redirectUrl: constructRedirectUrl(),
           additionalParameters: { prompt: 'login' },
+          // audience: 'https://notesight.co/auth-callback',
         },
         {
-          customScheme: 'com.notesight.app.auth0',
+          customScheme: 'notesight',
           ephemeralSession: true,
         },
       );
+      console.log('Login successful', credentials);
+      login();
+      setToken(credentials.accessToken);
       await Keychain.setGenericPassword('token', credentials.accessToken);
-      setCredentials(null);
-      updateCredentials();
+      setIsLoading(false);
     } catch (e: any) {
       if (e.code === 'USER_CANCELLED') {
         await cancelWebAuth();
@@ -57,40 +52,40 @@ export default function LoginScreen() {
     }
   };
 
-  const logout = async () => {
-    try {
-      await clearSession({ federated: true });
-      await Keychain.resetGenericPassword();
-    } catch (e) {
-      console.log('Error clearing session:', e);
-    }
-    setCredentials(null);
-  };
+  useFocusEffect(
+    React.useCallback(() => {
+      userLogin();
+    }, []),
+  );
 
-  if (user || credentials) {
+  if (isLoading) {
     return (
-      <TouchableOpacity style={styles.signInButton} onPress={logout}>
-        <Text style={styles.signInText}>Sign out</Text>
-      </TouchableOpacity>
-    );
-  } else {
-    return (
-      <TouchableOpacity style={styles.signInButton} onPress={login}>
-        <Text style={styles.signInText}>Sign in</Text>
-      </TouchableOpacity>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
     );
   }
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 10,
+        }}
+      >
+        <AppNavBar login={userLogin} />
+
+        <HomeScreen />
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-  signInButton: {
-    backgroundColor: '#000',
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 20,
-  },
-  signInText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
+  image: { height: 30, width: 200 },
 });

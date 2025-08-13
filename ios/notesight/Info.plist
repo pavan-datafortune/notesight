@@ -27,9 +27,12 @@
 				<key>CFBundleURLName</key>
 				<string>auth0</string>
 				<key>CFBundleURLSchemes</key>
-				<array>
+				 <array>
+     				<string>notesight</string>
+    			</array>
+				<!-- <array>
 					<string>$(PRODUCT_BUNDLE_IDENTIFIER).auth0</string>
-				</array>
+				</array> -->
 			</dict>
 		</array>
 

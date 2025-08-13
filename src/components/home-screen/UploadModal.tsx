@@ -1,5 +1,4 @@
-import { handleError } from '@apollo/client/link/http/parseAndCheckHttpResponse';
-import { SquareDashed, SquareDashedMousePointer, X } from 'lucide-react-native';
+import { SquareDashedMousePointer, X } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
   Modal,
@@ -10,16 +9,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { pick } from '@react-native-documents/picker';
-import { getPresignedUrl } from '../../api/file-upload/GetPresignedURL';
-import { uploadFileToS3 } from '../../api/file-upload/UploadFileToS3';
-import { completeUpload } from '../../api/file-upload/CompleteUpload';
+import { getPresignedUrl } from '../../service/file-upload/GetPresignedURL';
+import { uploadFileToS3 } from '../../service/file-upload/UploadFileToS3';
+import { completeUpload } from '../../service/file-upload/CompleteUpload';
+import { getMediaType } from '../../utils/getMediaTypes';
 
 type Props = {
   visible: boolean;
   onClose: () => void;
 };
 
-const UploadModal = ({ visible, onClose }: Props) => {
+export const UploadModal = ({ visible, onClose }: Props) => {
   const [files, setFiles] = useState<any>([]);
   const [isUploading, setUploading] = useState<any>([]);
   console.log('visible>>>', visible);
@@ -67,10 +67,12 @@ const UploadModal = ({ visible, onClose }: Props) => {
         const s3Response = await uploadFileToS3(file, preSignedUrl?.url);
         console.log('s3Response>>>>', s3Response);
         if (s3Response.ok) {
+          const filTitle = file.name.replace(/\.[^/.]+$/, '');
+          const fileType = getMediaType(file.type);
           const completeUploadRes = await completeUpload({
-            fileTitle: file.name,
-            fileType: file.type,
             s3Key: preSignedUrl?.key,
+            fileTitle: filTitle,
+            fileType: fileType,
           });
           console.log('completeUploadRes>>>>', completeUploadRes);
         }
@@ -198,5 +200,3 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
-
-export default UploadModal;

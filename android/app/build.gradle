@@ -80,7 +80,11 @@ android {
     namespace "com.notesight.app"
     defaultConfig {
     applicationId "com.notesight.app"
-    manifestPlaceholders = [auth0Domain: "dev-ihammamxgdm4t4va.us.auth0.com", auth0Scheme: "${applicationId}.auth0"]
+    manifestPlaceholders = [
+    auth0Domain: "dev-7v1ogpzhapj6e1en.us.auth0.com",
+    auth0Scheme: "notesight",
+    auth0Host: "callback"
+]   // manifestPlaceholders = [auth0Domain: "dev-7v1ogpzhapj6e1en.us.auth0.com", auth0Scheme: "${applicationId}.auth0"]
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

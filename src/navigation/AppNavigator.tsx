@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
-import Dashboard from '../screens/Dashboard';
 import FlashCardScreen from '../screens/FlashCardScreen';
+import TutorCenterTools from '../screens/TutorCenterTools';
+import Planner from '../screens/Planner';
 
 const Stack = createNativeStackNavigator();
 
@@ -9,12 +9,17 @@ export default function AppNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Dashboard"
-        component={Dashboard}
+        name="Planner"
+        component={Planner}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Flash Cards"
+        name="TutorCenterTools"
+        component={TutorCenterTools}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FlashCards"
         component={FlashCardScreen}
         options={{ headerBackButtonDisplayMode: 'minimal' }}
       />

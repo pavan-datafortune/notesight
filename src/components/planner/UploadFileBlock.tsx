@@ -1,7 +1,6 @@
 import { SquareDashedMousePointer, X } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
-  Modal,
   View,
   Text,
   StyleSheet,
@@ -9,13 +8,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { pick } from '@react-native-documents/picker';
-import { getPresignedUrl } from '../../api/file-upload/GetPresignedURL';
-import { uploadFileToS3 } from '../../api/file-upload/UploadFileToS3';
-import { completeUpload } from '../../api/file-upload/CompleteUpload';
+import { getPresignedUrl } from '../../service/file-upload/GetPresignedURL';
+import { uploadFileToS3 } from '../../service/file-upload/UploadFileToS3';
+import { completeUpload } from '../../service/file-upload/CompleteUpload';
+import { getMediaType } from '../../utils/getMediaTypes';
 
-const UploadFileBlock = () => {
+const UploadFileBlock = ({ onUpdate, setUploading }: any) => {
   const [files, setFiles] = useState<any>([]);
-  const [isUploading, setUploading] = useState<any>([]);
 
   const pickDocument = async () => {
     try {
@@ -36,14 +35,20 @@ const UploadFileBlock = () => {
         const s3Response = await uploadFileToS3(file, preSignedUrl?.url);
         console.log('s3Response>>>>', s3Response);
         if (s3Response.ok) {
+          const filTitle = file.name.replace(/\.[^/.]+$/, '');
+          const fileType = getMediaType(file.type);
           const completeUploadRes = await completeUpload({
-            fileTitle: file.name,
-            fileType: file.type,
             s3Key: preSignedUrl?.key,
+            fileTitle: filTitle,
+            fileType: fileType,
           });
           console.log('completeUploadRes>>>>', completeUploadRes);
         }
+        setFiles([]);
+        console.log('Files uploaded successfully');
+        await onUpdate();
       });
+      console.log('Refetch all Files successfully');
       setUploading(false);
     } catch (error) {
       console.error('[FileUpload] Upload error:', error);
@@ -79,11 +84,7 @@ const UploadFileBlock = () => {
       </Text>
 
       <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
-        {isUploading ? (
-          <Text style={styles.uploadButtonText}>Uploading...</Text>
-        ) : (
-          <Text style={styles.uploadButtonText}>Upload</Text>
-        )}
+        <Text style={styles.uploadButtonText}>Upload</Text>
       </TouchableOpacity>
     </View>
   );
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   uploadButton: {
-    backgroundColor: '#2D70FD',
+    backgroundColor: '#2B6ED3',
     paddingVertical: 10,
     borderRadius: 24,
     alignItems: 'center',
