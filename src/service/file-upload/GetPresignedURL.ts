@@ -1,8 +1,7 @@
-import { token } from '../../auth-key/AuthService';
-// import { useAuthStore } from '../../stores/auth';
+import { useAuthStore } from '../../stores/auth';
 
 export const getPresignedUrl = async (fileName: string) => {
-  // const { token } = useAuthStore.getState();
+  const { token } = useAuthStore.getState();
 
   const query = `
     mutation GetPresignedUploadUrl($input: GetPresignedUrlInput!) {

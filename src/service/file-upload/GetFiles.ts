@@ -1,8 +1,8 @@
-import { token } from '../../auth-key/AuthService';
-// import { useAuthStore } from '../../stores/auth';
+// import { token } from '../../auth-key/AuthService';
+import { useAuthStore } from '../../stores/auth';
 
 export const fetchAllDocuments = async () => {
-  // const { token } = useAuthStore.getState();
+  const { token } = useAuthStore.getState();
 
   console.log('Fetching all documents with token:', token);
 

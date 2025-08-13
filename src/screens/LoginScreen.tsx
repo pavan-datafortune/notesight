@@ -29,8 +29,8 @@ export default function LoginScreen() {
         {
           scope: 'openid profile email',
           redirectUrl: constructRedirectUrl(),
+          audience: 'https://dev-7v1ogpzhapj6e1en.us.auth0.com/api/v2/',
           additionalParameters: { prompt: 'login' },
-          // audience: 'https://notesight.co/auth-callback',
         },
         {
           customScheme: 'notesight',

@@ -1,6 +1,7 @@
-import { token } from '../../auth-key/AuthService';
+import { useAuthStore } from '../../stores/auth';
 
 export async function generateFlashCardOnDemand(documentIds: number[]) {
+  const { token } = useAuthStore.getState();
   const query = `
     mutation generateFlashCardOnDemand($input: GenerateSummariesInput!) {
         document {

@@ -1,8 +1,7 @@
-import { token } from '../../auth-key/AuthService';
-// import { useAuthStore } from '../../stores/auth';
+import { useAuthStore } from '../../stores/auth';
 
 export async function getAllDocumentFlashCards(documentId: any) {
-  // const { token } = useAuthStore.getState();
+  const { token } = useAuthStore.getState();
   const query = `
     query GetAllDocumentFlashCards($input: GetAllDocumentFlashCardsInput!) {
       flashCard {
