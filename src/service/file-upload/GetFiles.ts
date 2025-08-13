@@ -1,6 +1,11 @@
-import { token } from '../../service/AuthService';
+import { token } from '../../auth-key/AuthService';
+// import { useAuthStore } from '../../stores/auth';
 
 export const fetchAllDocuments = async () => {
+  // const { token } = useAuthStore.getState();
+
+  console.log('Fetching all documents with token:', token);
+
   const query = `
     query documentGetAll {
       document {
@@ -69,7 +74,6 @@ export const fetchAllDocuments = async () => {
 
     const result = await response.json();
 
-    console.log('📄 Documents:', result.data.document.getAll);
     return result.data.document.getAll;
   } catch (error) {
     console.error('❌ Failed to fetch documents:', error);

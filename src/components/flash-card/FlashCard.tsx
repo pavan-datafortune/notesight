@@ -6,9 +6,10 @@ import {
   Text,
   View,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 
-const FlashCard = ({ key, flashData }: any) => {
+const FlashCard = ({ flashData }: any) => {
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -42,7 +43,7 @@ const FlashCard = ({ key, flashData }: any) => {
   };
 
   return (
-    <TouchableWithoutFeedback key={key} onPress={flipCard}>
+    <TouchableWithoutFeedback onPress={flipCard}>
       <View style={styles.container}>
         <Animated.View
           style={[
@@ -77,15 +78,19 @@ const FlashCard = ({ key, flashData }: any) => {
         <Animated.View
           style={[
             styles.card,
-            styles.cardBack,
             {
               transform: [{ perspective: 1000 }, { rotateY: backInterpolate }],
             },
           ]}
         >
-          <View>
-            <Text style={styles.backCardText}>{flashData.correctAnswer}</Text>
-          </View>
+          <ScrollView
+            style={{ flex: 1, width: '100%' }}
+            contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          >
+            <View style={styles.cardBack}>
+              <Text style={styles.backCardText}>{flashData.correctAnswer}</Text>
+            </View>
+          </ScrollView>
         </Animated.View>
       </View>
     </TouchableWithoutFeedback>
@@ -110,17 +115,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   cardBack: {
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#EAEAEA',
+    borderRadius: 10,
   },
   backCardText: {
-    padding: 16,
-    fontSize: 16,
+    padding: 10,
+    fontSize: 11,
     fontWeight: 'bold',
     textAlign: 'center',
   },
 
   fontCardText: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
   },

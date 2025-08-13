@@ -1,5 +1,12 @@
 export type RouteStackParamList = {
-  login: undefined;
-  'Home Screen': undefined;
-  'Flash Cards': undefined;
+  Login: undefined;
+  TestPrep: undefined;
+  CourseAPPrep: undefined;
+  TutorCenterTools: undefined;
+  Account: undefined;
+  CustomerService: undefined;
+  Blog: undefined;
+  HomeScreen: undefined;
+  FlashCards: { documentIds: string };
+  Planner: undefined;
 };

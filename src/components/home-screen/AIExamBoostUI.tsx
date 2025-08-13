@@ -24,7 +24,12 @@ const AIExamBoostUI = () => {
         </Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Flash Cards')}
+          onPress={() =>
+            navigation.navigate({
+              name: 'FlashCards',
+              params: { documentIds: '' },
+            })
+          }
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>

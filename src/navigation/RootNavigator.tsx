@@ -1,18 +1,27 @@
+import React from 'react';
+import { ActivityIndicator, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth0 } from 'react-native-auth0';
-import AppNavigator from './AppNavigator';
-import AuthNavigator from './AuthNavigator';
 
-const Stack = createNativeStackNavigator();
+import AuthNavigator from './AuthNavigator';
+import AppNavigator from './AppNavigator';
+import { useAuthStore } from '../stores/auth';
 
 export default function RootNavigator() {
-  const { user, isLoading, error } = useAuth0();
-  console.log('ROOT NAV USER CONTEXT :: ', user, error, isLoading);
+  const { user, isLoading } = useAuth0();
+  const isLoggedIn = useAuthStore(state => state.isLoggedIn);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
-      {user ? <AppNavigator /> : <AuthNavigator />}
+      {isLoggedIn ? <AppNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }

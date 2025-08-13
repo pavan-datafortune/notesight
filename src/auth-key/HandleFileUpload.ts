@@ -1,4 +1,4 @@
-import { getPresignedUrl } from '../api/file-upload/GetPresignedURL';
+import { getPresignedUrl } from '../service/file-upload/GetPresignedURL';
 
 const handleUpload = async () => {
   const fileName = 'Screenshot 2025-08-07 at 6.10.51 PM.png';

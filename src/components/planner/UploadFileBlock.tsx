@@ -1,7 +1,6 @@
 import { SquareDashedMousePointer, X } from 'lucide-react-native';
 import React, { useState } from 'react';
 import {
-  Modal,
   View,
   Text,
   StyleSheet,
@@ -14,15 +13,9 @@ import { uploadFileToS3 } from '../../service/file-upload/UploadFileToS3';
 import { completeUpload } from '../../service/file-upload/CompleteUpload';
 import { getMediaType } from '../../utils/getMediaTypes';
 
-type Props = {
-  visible: boolean;
-  onClose: () => void;
-};
-
-export const UploadModal = ({ visible, onClose }: Props) => {
+const UploadFileBlock = ({ onUpdate, setUploading }: any) => {
   const [files, setFiles] = useState<any>([]);
-  const [isUploading, setUploading] = useState<any>([]);
-  console.log('visible>>>', visible);
+
   const pickDocument = async () => {
     try {
       const result = await pick();
@@ -31,31 +24,6 @@ export const UploadModal = ({ visible, onClose }: Props) => {
       console.error('Error picking document: ', err);
     }
   };
-
-  // const pickDocument = async () => {
-  //   try {
-  //     const results = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.allFiles],
-  //       allowMultiSelection: false, // true if you want multiple
-  //     });
-
-  //     const files = results.map(file => ({
-  //       uri: file.uri,
-  //       name: file.name,
-  //       size: file.size,
-  //       type: file.type, // MIME type if available
-  //     }));
-
-  //     setFiles(files);
-  //     console.log('Selected files:', files);
-  //   } catch (err: any) {
-  //     if (err?.code === 'DOCUMENT_PICKER_CANCELED') {
-  //       console.log('User cancelled document picker');
-  //     } else {
-  //       console.error('Error picking document:', err);
-  //     }
-  //   }
-  // };
 
   async function handleUpload() {
     try {
@@ -76,7 +44,11 @@ export const UploadModal = ({ visible, onClose }: Props) => {
           });
           console.log('completeUploadRes>>>>', completeUploadRes);
         }
+        setFiles([]);
+        console.log('Files uploaded successfully');
+        await onUpdate();
       });
+      console.log('Refetch all Files successfully');
       setUploading(false);
     } catch (error) {
       console.error('[FileUpload] Upload error:', error);
@@ -84,46 +56,37 @@ export const UploadModal = ({ visible, onClose }: Props) => {
   }
 
   return (
-    <Modal transparent animationType="fade" visible={visible}>
-      <Pressable style={styles.modalOverlay} onPress={onClose}>
-        <Pressable style={styles.modalCard} onPress={() => {}}>
-          <View style={styles.header}>
-            <Text style={styles.title}>Upload your file</Text>
-            <TouchableOpacity onPress={onClose}>
-              <X size={20} color="#000" />
-            </TouchableOpacity>
+    <View style={styles.modalCard}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Upload your file</Text>
+      </View>
+
+      <Pressable style={styles.dropZone} onPress={pickDocument}>
+        <SquareDashedMousePointer size={32} color="#7B7B7B" />
+        <Text style={styles.dropText}>Click or Drag and drop your files</Text>
+        {files && (
+          <View style={{ display: 'flex', flexDirection: 'column' }}>
+            {files.map((each: any, key: any) => (
+              <Text key={key} style={styles.fileNames}>
+                {each?.name}
+              </Text>
+            ))}
           </View>
-
-          <Pressable style={styles.dropZone} onPress={pickDocument}>
-            <SquareDashedMousePointer size={32} color="#7B7B7B" />
-            <Text style={styles.dropText}>
-              Click or Drag and drop your files
-            </Text>
-            {files && (
-              <View style={{ display: 'flex', flexDirection: 'column' }}>
-                {files.map((each: any, key: any) => (
-                  <Text key={key} style={styles.fileNames}>
-                    {each?.name}
-                  </Text>
-                ))}
-              </View>
-            )}
-          </Pressable>
-
-          <Text style={styles.supportedTypes}>
-            .aac, .webm, .mov, .mp4, .mp3, .avi, .png, .jpg, .jpeg, .pdf, .pptx,
-            .docx, .xlsx, .xls, .csv
-          </Text>
-          <Text style={styles.limits}>
-            Doc File Max – 500 Mb, Media File Max – 1.5 Gb
-          </Text>
-
-          <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
-            <Text style={styles.uploadButtonText}>Upload</Text>
-          </TouchableOpacity>
-        </Pressable>
+        )}
       </Pressable>
-    </Modal>
+
+      <Text style={styles.supportedTypes}>
+        .aac, .webm, .mov, .mp4, .mp3, .avi, .png, .jpg, .jpeg, .pdf, .pptx,
+        .docx, .xlsx, .xls, .csv
+      </Text>
+      <Text style={styles.limits}>
+        Doc File Max – 500 Mb, Media File Max – 1.5 Gb
+      </Text>
+
+      <TouchableOpacity style={styles.uploadButton} onPress={handleUpload}>
+        <Text style={styles.uploadButtonText}>Upload</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -189,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   uploadButton: {
-    backgroundColor: '#2D70FD',
+    backgroundColor: '#2B6ED3',
     paddingVertical: 10,
     borderRadius: 24,
     alignItems: 'center',
@@ -200,3 +163,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
 });
+
+export default UploadFileBlock;
