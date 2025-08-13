@@ -1,43 +1,51 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.notesight.app">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-      android:name=".MainApplication"
+  <application
+    android:name=".MainApplication"
+    android:label="@string/app_name"
+    android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:allowBackup="false"
+    android:theme="@style/AppTheme"
+    android:supportsRtl="true">
+
+    <!-- Your launcher activity -->
+    <activity
+      android:name=".MainActivity"
       android:label="@string/app_name"
-      android:icon="@mipmap/ic_launcher"
-      android:roundIcon="@mipmap/ic_launcher_round"
-      android:allowBackup="false"
-      android:theme="@style/AppTheme"
-      android:supportsRtl="true">
-      <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
-        android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustResize"
-        android:exported="true">
-<activity ...>
-<intent-filter android:label="Auth0">
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data
-      android:scheme="com.notesight"
-      android:host="callback" />
-</intent-filter>
-</activity>
-<!-- 
-        <intent-filter>
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data
-      android:scheme="notesight"
-      android:host="dev-ihammamxgdm4t4va.us.auth0.com"
-      android:pathPrefix="/android/com.notesight/callback" />
-  </intent-filter> -->
+      android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+      android:launchMode="singleTask"
+      android:windowSoftInputMode="adjustResize"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
 
-      </activity>
-    </application>
+    <!-- Auth0 redirect -->
+    <activity
+      android:name="com.auth0.android.provider.RedirectActivity"
+      android:exported="true"
+      android:launchMode="singleTask">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+          <data android:scheme="notesight" android:host="android" android:path="/callback" />
+        <!-- <data
+          android:scheme="com.notesight.app.auth0"
+          android:host="dev-ihammamxgdm4t4va.us.auth0.com"
+          android:pathPrefix="/android/com.notesight.app/callback" /> -->
+      </intent-filter>
+    </activity>
+
+    <activity
+      android:name="com.auth0.android.provider.AuthenticationActivity"
+      android:launchMode="singleTask"
+      android:exported="false" />
+  </application>
 </manifest>

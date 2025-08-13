@@ -1,20 +1,47 @@
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import {
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
-import auth0 from '../auth/auth0';
+import { constructRedirectUrl } from '../auth/auth0';
+import { useState } from 'react';
+import { AppNavBar } from '../components/app-navbar/AppNavbar';
+import { useFocusEffect } from '@react-navigation/native';
+import { useAuthStore } from '../stores/auth';
+import HomeScreen from './HomeScreen';
 import * as Keychain from 'react-native-keychain';
 
 export default function LoginScreen() {
-  const { cancelWebAuth } = useAuth0();
+  const { cancelWebAuth, authorize } = useAuth0();
+  const { setToken, login } = useAuthStore.getState();
 
-  const login = async () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const userLogin = async () => {
     try {
-      const credentials = await auth0.webAuth.authorize({
-        scope: 'openid profile email',
-        audience: 'https://dev-7v1ogpzhapj6e1en.us.auth0.com',
-        redirectUrl: 'com.notesight://auth-callback',
-      });
-
+      setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      console.log('constructRedirectUrl', constructRedirectUrl());
+      const credentials = await authorize(
+        {
+          scope: 'openid profile email',
+          redirectUrl: constructRedirectUrl(),
+          additionalParameters: { prompt: 'login' },
+          // audience: 'https://notesight.co/auth-callback',
+        },
+        {
+          customScheme: 'notesight',
+          ephemeralSession: true,
+        },
+      );
+      console.log('Login successful', credentials);
+      login();
+      setToken(credentials.accessToken);
       await Keychain.setGenericPassword('token', credentials.accessToken);
+      setIsLoading(false);
     } catch (e: any) {
       if (e.code === 'USER_CANCELLED') {
         await cancelWebAuth();
@@ -25,22 +52,40 @@ export default function LoginScreen() {
     }
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      userLogin();
+    }, []),
+  );
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
-    <TouchableOpacity style={styles.signInButton} onPress={login}>
-      <Text style={styles.signInText}>Sign in</Text>
-    </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 10,
+        }}
+      >
+        <AppNavBar login={userLogin} />
+
+        <HomeScreen />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  signInButton: {
-    backgroundColor: '#000',
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 20,
-  },
-  signInText: {
-    color: '#fff',
-    fontWeight: '600',
-  },
+  image: { height: 30, width: 200 },
 });
